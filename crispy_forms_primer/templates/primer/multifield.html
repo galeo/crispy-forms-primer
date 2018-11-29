@@ -1,0 +1,39 @@
+{% load crispy_forms_field %}
+
+{% if field.is_hidden %}
+  {{ field }}
+{% else %}
+
+  {% if field|is_checkbox %}
+    <div id="div_{{ field.auto_id }}"
+         class="form-checkbox{% if wrapper_class %} {{ wrapper_class }}{% endif %}{% if form_show_errors%}{% if field.errors %} errored{% endif %}{% endif %}{% if field.css_classes %} {{ field.css_classes }}{% endif %}">
+      {% if form_show_labels %}
+        <label for="{{ field.id_for_label }}" {% if label_class %}class="{{ label_class }}"{% endif %}>
+          {% crispy_field field %}
+          {{ field.label|safe }}
+        </label>
+      {% else %}
+        {% crispy_field field %}
+      {% endif %}
+      {% include 'primer/layout/help_text_and_errors.html' %}
+    </div>
+
+  {% else %}
+
+    <dl class="form-group {% if field.errors %}errored{% endif %}">
+      {% if field.label %}
+        <dt>
+          <label for="{{ field.id_for_label }}" {% if label_class %}class="{{ label_class }}"{% endif %}>
+            {{ field.label }}
+          </label>
+        </dt>
+      {% endif %}
+
+      <dd>
+        {% crispy_field field %}
+      </dd>
+
+      {% include 'primer/layout/help_text_and_errors.html' %}
+    </dl>
+  {% endif %}
+{% endif %}

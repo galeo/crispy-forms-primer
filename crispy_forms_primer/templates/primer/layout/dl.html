@@ -1,0 +1,4 @@
+<dl {% if dl.css_id %}id="{{ dl.css_id }}"{% endif %}
+    {% if dl.css_class %}class="{{ dl.css_class }}"{% endif %} {{ dl.flat_attrs|safe }}>
+  {{ fields|safe }}
+</dl>
