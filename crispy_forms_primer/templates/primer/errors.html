@@ -1,0 +1,8 @@
+{% if form.non_field_errors %}
+  <div class="flash flash-error">
+    {% if form_error_title %}<h4 class="mb-2">{{ form_error_title }}</h4>{% endif %}
+    <ul class="{% if form.non_field_errors|length > 1 %}pl-3{% else %}list-style-none{% endif %}">
+      {{ form.non_field_errors|unordered_list }}
+    </ul>
+  </div>
+{% endif %}

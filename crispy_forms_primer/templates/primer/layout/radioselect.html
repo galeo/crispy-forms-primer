@@ -1,0 +1,18 @@
+{% load crispy_forms_filters %}
+{% load l10n %}
+
+<div {% if inline_class %}class="d-flex"{% endif %}>
+  {% for choice in field.field.choices %}
+    <div class="form-checkbox {% if inline_class %}mr-5{% endif %}">
+      <label {% if label_class %}class="{{ label_class }}"{% endif %}>
+        <input type="radio"{% if choice.0|stringformat:"s" == field.value|default_if_none:""|stringformat:"s" %} checked="checked"{% endif %}
+               name="{{ field.html_name }}"
+               id="id_{{ field.id_for_label }}_{{ forloop.counter }}"
+               value="{{ choice.0|unlocalize }}" {{ field.field.widget.attrs|flatatt }}>
+        {{ choice.1|unlocalize }}
+      </label>
+    </div>
+  {% endfor %}
+
+  {% include 'primer/layout/help_text_and_errors.html' %}
+</div>

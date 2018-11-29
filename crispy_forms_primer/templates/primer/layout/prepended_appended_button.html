@@ -1,0 +1,62 @@
+{% load crispy_forms_primer_tags %}
+
+{% if field.is_hidden %}
+  {{ field }}
+{% else %}
+  {% if field.label and form_show_labels %}
+    <dl id="dl_{{ field.auto_id }}"
+        class="form-group{% if wrapper_class %} {{ wrapper_class }}{% endif %}{% if form_show_errors and field.errors %} errored{% endif %}{% if field.css_classes %} {{ field.css_classes }}{% endif %}">
+      <dt>
+        <label for="{{ field.id_for_label }}" {% if label_class %}class="{{ label_class }}"{% endif %}>
+          {{ field.label|safe }}
+        </label>
+      </dt>
+
+      <dd>
+        <div class="input-group">
+          {% if crispy_prepended_button %}
+            <span class="input-group-button">
+              <button class="btn" type="button">
+                {{ crispy_prepended_button|safe }}
+              </button>
+            </span>
+          {% endif %}
+
+          {% crispy_field field %}
+
+          {% if crispy_appended_button %}
+            <span class="input-group-button">
+              <button class="btn" type="button">
+                {{ crispy_appended_button|safe }}
+              </button>
+            </span>
+          {% endif %}
+        </div>
+      </dd>
+
+      {% include 'primer/layout/help_text_and_errors.html' %}
+    </dl>
+  {% else %}
+    <div class="input-group">
+      {% if crispy_prepended_button %}
+        <span class="input-group-button">
+          <button class="btn" type="button">
+            {{ crispy_prepended_button|safe }}
+          </button>
+        </span>
+      {% endif %}
+
+      {% crispy_field field %}
+
+      {% if crispy_appended_button %}
+        <span class="input-group-button">
+          <button class="btn" type="button">
+            {{ crispy_appended_button|safe }}
+          </button>
+        </span>
+      {% endif %}
+
+      {% include 'primer/layout/help_text_and_errors.html' %}
+    </div>
+  {% endif %}
+{% endif %}

@@ -1,0 +1,19 @@
+{% load l10n %}
+
+<div {% if inline_class %}class="d-flex"{% endif %}>
+  {% for choice in field.field.choices %}
+    <div class="form-checkbox {% if inline_class %}mr-5{% endif %}">
+      <label for="id_{{ field.html_name}}_{{ forloop.counter }}"
+             {% if label_class %}class="{{ label_class }}"{% endif %}
+             {% if flat_attrs %} {{ flat_attrs|safe }}{% endif %}>
+        <input type="checkbox"
+               {% if choice.0 in field.value or choice.0|stringformat:"s" in field.value or choice.0|stringformat:"s" == field.value|stringformat:"s" %} checked="checked"{% endif %}
+               name="{{ field.html_name }}"
+               id="id_{{ field.html_name }}_{{ forloop.counter }}" value="{{ choice.0|unlocalize }}">
+        {{ choice.1|unlocalize }}
+      </label>
+    </div>
+  {% endfor %}
+
+  {% include 'primer/layout/help_text_and_errors.html' %}
+</div>
