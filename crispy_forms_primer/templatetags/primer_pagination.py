@@ -141,7 +141,7 @@ def get_pagination_context(page, url=None,  # noqa C901
                             if gap == 2:
                                 yield last + 1
                             if gap > 2:
-                                yield '...'
+                                yield None
                         # left gap
                         if last == left_edge:
                             delta = boundary - (num_pages - num + 1)
@@ -149,7 +149,7 @@ def get_pagination_context(page, url=None,  # noqa C901
                             if gap == 2:
                                 yield last + 1
                             if gap > 2:
-                                yield '...'
+                                yield None
                             while delta > 0:
                                 yield num - delta
                                 delta -= 1
