@@ -1,0 +1,21 @@
+{% with ppurl=primer_pagination_url|default:"" %}
+    <nav class="paginate-container" aria-label="Pagination">
+        <div class="pagination">
+            {% if has_prev %}
+                <a class="previous_page" rel="previous"
+                   href="{% primer_url_replace_param ppurl parameter_name prev_num %}"
+                   aria-label="Previous Page">Previous</a>
+            {% else %}
+                <span class="previous_page" aria-disabled="true">Previous</span>
+            {% endif %}
+
+            {% if has_next %}
+                <a class="next_page" rel="next"
+                   href="{% primer_url_replace_param ppurl parameter_name next_num %}"
+                   aria-label="Next Page">Next</a>
+            {% else %}
+                <span class="next_page" aria-disabled="true">Next</span>
+            {% endif %}
+        </div>
+    </nav>
+{% endwith %}
