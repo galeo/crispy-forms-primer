@@ -1,3 +1,5 @@
+{% load primer_pagination %}
+
 {% with ppurl=primer_pagination_url|default:"" %}
     <div class="pagination-container page-responsive" aria-label="Pagination">
         <div class="{{ pagination_css_classes }}">
