@@ -4,15 +4,15 @@
   {{ field }}
 {% else %}
   {% if field.label and form_show_labels %}
-    <dl id="dl_{{ field.auto_id }}"
+    <div id="div_{{ field.auto_id }}"
         class="form-group{% if wrapper_class %} {{ wrapper_class }}{% endif %}{% if form_show_errors and field.errors %} errored{% endif %}{% if field.css_classes %} {{ field.css_classes }}{% endif %}">
-      <dt>
+      <div class="form-group-header">
         <label for="{{ field.id_for_label }}" {% if label_class %}class="{{ label_class }}"{% endif %}>
           {{ field.label|safe }}
         </label>
-      </dt>
+      </div>
 
-      <dd>
+      <div class="form-group-body">
         <div class="input-group">
           {% if crispy_prepended_button %}
             <span class="input-group-button">
@@ -32,10 +32,10 @@
             </span>
           {% endif %}
         </div>
-      </dd>
+      </div>
 
       {% include 'primer/layout/help_text_and_errors.html' %}
-    </dl>
+    </div>
   {% else %}
     <div class="input-group">
       {% if crispy_prepended_button %}

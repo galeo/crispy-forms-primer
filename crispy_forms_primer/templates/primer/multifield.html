@@ -20,20 +20,20 @@
 
   {% else %}
 
-    <dl class="form-group {% if field.errors %}errored{% endif %}">
+    <div class="form-group {% if field.errors %}errored{% endif %}">
       {% if field.label %}
-        <dt>
+        <div class="form-group-header">
           <label for="{{ field.id_for_label }}" {% if label_class %}class="{{ label_class }}"{% endif %}>
             {{ field.label }}
           </label>
-        </dt>
+        </div>
       {% endif %}
 
-      <dd>
+      <div class="form-group-body">
         {% crispy_field field %}
-      </dd>
+      </div>
 
       {% include 'primer/layout/help_text_and_errors.html' %}
-    </dl>
+    </div>
   {% endif %}
 {% endif %}
