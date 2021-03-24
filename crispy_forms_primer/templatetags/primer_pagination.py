@@ -56,7 +56,7 @@ def parse_url(url=None, extra=None):
 
 
 @register.inclusion_tag('primer/pagination/prev_next_pagination.html')
-def primer_pagination(page, url=None, extra=None, parameter_name='page', **kwargs):
+def primer_pagination(page, url=None, extra=None, parameter_name='page'):
     current_page = page.number
     url = parse_url(url, extra)
     return {
