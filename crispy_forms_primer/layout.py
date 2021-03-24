@@ -5,35 +5,10 @@ from crispy_forms.utils import TEMPLATE_PACK, flatatt
 
 
 __all__ = [
-    'Layout', 'HTML', 'Div', 'DL', 'FormGroup', 'InputGroup',
+    'DL', 'FormGroup', 'InputGroup',
     'FormActions', 'ButtonElement', 'ButtonSelectMenu',
-    'Field', 'InlineCheckboxes', 'InlineRadios', 'MultiField'
+    'InlineCheckboxes', 'InlineRadios', 'MultiField'
 ]
-
-
-class Layout(crispy_forms_layout.Layout):
-    pass
-
-
-class HTML(crispy_forms_layout.HTML):
-    pass
-
-
-class Div(crispy_forms_layout.Div):
-    """
-    It wraps fields inside a ``<div>`` element.
-
-    You can set ``css_id`` for element id and ``css_class`` for a element
-    class names.
-
-    Example:
-
-    .. sourcecode:: python
-
-        Div('form_field_1', 'form_field_2', css_id='div-example',
-            css_class='divs')
-    """
-    template = "%s/layout/div.html"
 
 
 class DL(crispy_forms_layout.Div):
@@ -56,22 +31,22 @@ class DL(crispy_forms_layout.Div):
         return render_to_string(template, {'dl': self, 'fields': fields})
 
 
-class FormGroup(DL):
+class FormGroup(crispy_forms_layout.Div):
     """
-    Act like ``DL`` but add a ``form-group`` class name.
+    Act like ``Div`` but add a ``form-group`` class name.
     """
-    def __init__(self, field, *args, **kwargs):
+    def __init__(self, *fields, **kwargs):
         kwargs['css_class'] = kwargs.get('css_class', '') + ' form-group'
-        super(InputGroup, self).__init__(field, *args, **kwargs)
+        super().__init__(*fields, **kwargs)
 
 
 class InputGroup(crispy_forms_layout.Div):
     """
     Act like ``Div`` but add a ``input-group`` class name.
     """
-    def __init__(self, field, *args, **kwargs):
+    def __init__(self, *fields, **kwargs):
         kwargs['css_class'] = kwargs.get('css_class', '') + ' input-group'
-        super(InputGroup, self).__init__(field, *args, **kwargs)
+        super().__init__(*fields, **kwargs)
 
 
 class FormActions(crispy_forms_layout.Div):
@@ -82,9 +57,9 @@ class FormActions(crispy_forms_layout.Div):
     buttons—in forms with ``.form-actions``.
     The floats are automatically cleared for you.
     """
-    def __init__(self, field, *args, **kwargs):
+    def __init__(self, *fields, **kwargs):
         kwargs['css_class'] = kwargs.get('css_class', '') + ' from-actions'
-        super(InputGroup, self).__init__(field, *args, **kwargs)
+        super().__init__(*fields, **kwargs)
 
 
 class ButtonElement(crispy_forms_layout.BaseInput):
@@ -115,14 +90,13 @@ class ButtonElement(crispy_forms_layout.BaseInput):
     input_type = 'button'
     field_classes = 'btn'
 
-    def __init__(self, field, *args, **kwargs):
+    def __init__(self, name, value, **kwargs):
         self.content = kwargs.pop('content', None)
-        super(ButtonElement, self).__init__(field, *args, **kwargs)
+        super().__init__(name, value, **kwargs)
 
-    def render(self, form, form_style, context, template_pack=TEMPLATE_PACK):
+    def render(self, form, form_style, context, template_pack=TEMPLATE_PACK, **kwargs):
         context['button_content'] = self.content
-        return super(ButtonElement, self).render(form, form_style, context,
-                                                 template_pack)
+        return super().render(form, form_style, context, template_pack, **kwargs)
 
 
 class ButtonSelectMenu(ButtonElement):
@@ -133,52 +107,40 @@ class ButtonSelectMenu(ButtonElement):
     field_classes = 'btn select-menu-button'
 
 
-class Field(crispy_forms_layout.Field):
-    """
-    Layout object, It contains one field name, and you can add attributes to it easily.
-    For setting class attributes, you need to use `css_class`, as `class` is a Python keyword.
-
-    Example::
-
-        Field('field_name', style="color: #333;", css_class="whatever", id="field_name")
-    """
-    template = "%s/field.html"
-
-
-class InlineCheckboxes(Field):
+class InlineCheckboxes(crispy_forms_layout.Field):
     """
     Layout object for rendering checkboxes inline::
 
         InlineCheckboxes('field_name')
     """
-    template = "%s/layout/checkboxselectmultiple_inline.html"
+    template = '%s/layout/checkboxselectmultiple_inline.html'
 
     def render(self, form, form_style, context, template_pack=TEMPLATE_PACK, **kwargs):
-        return super(InlineCheckboxes, self).render(
+        return super().render(
             form, form_style, context, template_pack=template_pack,
-            extra_context={'inline_class': 'inline'}
+            extra_context={'inline_class': 'inline'},
+            **kwargs
         )
 
 
-class InlineRadios(Field):
+class InlineRadios(crispy_forms_layout.Field):
     """
     Layout object for rendering radiobuttons inline::
 
         InlineRadios('field_name')
     """
-    template = "%s/layout/radioselect_inline.html"
+    template = '%s/layout/radioselect_inline.html'
 
     def render(self, form, form_style, context, template_pack=TEMPLATE_PACK, **kwargs):
         return super(InlineRadios, self).render(
             form, form_style, context, template_pack=template_pack,
-            extra_context={'inline_class': 'inline'}
+            extra_context={'inline_class': 'inline'},
+            **kwargs
         )
 
 
 class MultiField(crispy_forms_layout.MultiField):
     """ MultiField container. Renders to a MultiField <div> """
-    template = "%s/layout/multifield.html"
-    field_template = "%s/multifield.html"
 
     def __init__(self, label, *fields, **kwargs):
         self.fields = list(fields)
