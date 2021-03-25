@@ -1,0 +1,10 @@
+{% if formset.non_form_errors %}
+  <div class="flash flash-error">
+    {% if formset_error_title %}
+      <h4 class="mb-2">{{ formset_error_title }}</h4>
+    {% endif %}
+    <ul class="{% if formset.non_form_errors|length > 1 %}pl-3{% else %}list-style-none{% endif %}">
+      {{ formset.non_form_errors|unordered_list }}
+    </ul>
+  </div>
+{% endif %}
