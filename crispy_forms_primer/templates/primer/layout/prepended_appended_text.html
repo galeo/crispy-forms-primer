@@ -14,20 +14,20 @@
 
       <div class="form-group-body">
         <div class="input-group">
-          {% if crispy_prepended_button %}
+          {% if crispy_prepended_text %}
             <span class="input-group-button">
               <button class="btn" type="button">
-                {{ crispy_prepended_button|safe }}
+                {{ crispy_prepended_text|safe }}
               </button>
             </span>
           {% endif %}
 
           {% crispy_field field %}
 
-          {% if crispy_appended_button %}
+          {% if crispy_appended_text %}
             <span class="input-group-button">
               <button class="btn" type="button">
-                {{ crispy_appended_button|safe }}
+                {{ crispy_appended_text|safe }}
               </button>
             </span>
           {% endif %}
@@ -38,20 +38,20 @@
     </div>
   {% else %}
     <div class="input-group">
-      {% if crispy_prepended_button %}
+      {% if crispy_prepended_text %}
         <span class="input-group-button">
           <button class="btn" type="button">
-            {{ crispy_prepended_button|safe }}
+            {{ crispy_prepended_text|safe }}
           </button>
         </span>
       {% endif %}
 
       {% crispy_field field %}
 
-      {% if crispy_appended_button %}
+      {% if crispy_appended_text %}
         <span class="input-group-button">
           <button class="btn" type="button">
-            {{ crispy_appended_button|safe }}
+            {{ crispy_appended_text|safe }}
           </button>
         </span>
       {% endif %}
